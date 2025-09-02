@@ -8,7 +8,7 @@ from mimetypes import inited
 
 from ScopeFoundry import HardwareComponent
 #from NAC_device import NeoAndorDevice                          # for NAC_app
-from Andor_ScopeFoundry.NAC_device import NeoAndorDevice        # for SPIM_app
+from NAC_ScopeFoundry_update.NAC_device import NeoAndorDevice        # for SPIM_app
 
 class NeoAndorHW(HardwareComponent):
     name='NeoAndorHW'
