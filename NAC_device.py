@@ -31,7 +31,7 @@ class NeoAndorDevice(object):
     def image_read(self):
         return self.cam.read_oldest_image()
     def image_wait(self):
-        self.cam.wait_for_frame(timeout=None)
+        self.cam.wait_for_frame(since="now", nframes=1, timeout=None)
     def image_snap(self):
         return self.cam.snap()
 
@@ -47,6 +47,18 @@ class NeoAndorDevice(object):
             self.cam.set_attribute_value('SimplePreAmpGainControl', 1)
         if '11 bit (high well capacity)' in mode:
             self.cam.set_attribute_value('SimplePreAmpGainControl', 0)
+
+    def readout_rate(self,mode):
+        if '200 MHz' in mode:
+            self.cam.set_attribute_value('PixelReadoutRate', 2)
+        if '560 MHz' in mode:
+            self.cam.set_attribute_value('PixelReadoutRate', 3)
+
+    def overlap(self, mode):
+        self.cam.set_attribute_value('Overlap', mode)
+
+    def frame_rate(self):
+        return self.cam.get_attribute_value('FrameRate')
 
     #read temperature
     def temperature(self):
