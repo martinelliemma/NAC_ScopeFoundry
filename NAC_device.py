@@ -6,6 +6,7 @@ https://pylablib.readthedocs.io/en/stable/.apidoc/pylablib.devices.Andor.html#py
 @authors: Emma Martinelli, Andrea Bassi. Politecnico di Milano
 
 '''
+import numpy as np
 import pylablib as pll
 from pylablib.devices import Andor
 import matplotlib.pyplot as plt
@@ -88,10 +89,15 @@ class NeoAndorDevice(object):
     #camera info
     def camera_info(self):
         return self.cam.get_device_info()
-    def camera_width(self):
-        return self.cam.get_detector_size()[0]
-    def camera_height(self):
-        return self.cam.get_detector_size()[1]
+
+    def image_size(self):
+        hstart, hend, vstart, vend, hbin, vbin = self.roi_get()
+        width = (hend - hstart) // hbin
+        height = (vend - vstart) // vbin
+        return (width, height)
+
+    def detector_size(self):
+        return self.cam.get_detector_size()
 
     #trigger
     def trigger_get(self):
